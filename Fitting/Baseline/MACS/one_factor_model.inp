@@ -1,0 +1,38 @@
+TITLE: One Factor Analysis;
+DATA: FILE IS data.dat;
+VARIABLE: 
+NAMES ARE 
+GPEGDOM 
+GPEGNDOM 
+STRP1CV 
+STRP2CV 
+STRP3CV 
+TRLA 
+TRLB 
+SYDM 
+RAVTOT 
+RAVIR 
+RAVDELR;
+MODEL:
+G BY
+GPEGDOM* 
+GPEGNDOM 
+STRP1CV 
+STRP2CV 
+STRP3CV 
+TRLA 
+TRLB 
+SYDM 
+RAVTOT 
+RAVIR 
+RAVDELR;
+;
+G@1;
+[G@0];
+ANALYSIS:
+ESTIMATOR = MLR;
+OUTPUT: STDYX RESIDUAL;
+SAVEDATA:
+RESULTS ARE one_factor_model_results.txt;
+save=fscores;
+file=one_factor_model_fscore.dat;

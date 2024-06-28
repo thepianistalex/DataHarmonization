@@ -1,0 +1,41 @@
+TITLE: Second Order Factor Analysis;
+DATA: FILE IS data.dat;
+VARIABLE: 
+NAMES ARE 
+GPEGDOM 
+GPEGNDOM 
+TRLA 
+TRLB 
+PASAT 
+HVLTTOT 
+HVLTDELR 
+VFLU 
+SEMFLU;
+MODEL:
+MEM BY HVLTTOT* HVLTDELR;
+MEM(var_MEM);
+SPEED BY TRLA* TRLB PASAT;
+SPEED(var_SPEED);
+MOT BY GPEGDOM* GPEGNDOM;
+MOT(var_MOT);
+VERB BY SEMFLU* VFLU;
+VERB(var_VERB);
+G BY 
+MEM*(G_MEM)
+SPEED(G_SPEED)
+MOT(G_MOT)
+VERB(G_VERB);
+G@1;
+[G@0];
+MODEL CONSTRAINT:
+var_MEM = 1 - G_MEM^2;
+var_SPEED = 1 - G_SPEED^2;
+var_MOT = 1 - G_MOT^2;
+var_VERB = 1 - G_VERB^2;
+ANALYSIS:
+ESTIMATOR = MLR;
+OUTPUT: STDYX RESIDUAL;
+SAVEDATA:
+RESULTS ARE second_order_factor_model_results.txt;
+save=fscores;
+file=second_order_factor_model_fscore.dat;
