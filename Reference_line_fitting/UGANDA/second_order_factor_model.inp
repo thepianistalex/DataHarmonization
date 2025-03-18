@@ -1,0 +1,37 @@
+TITLE: Second Order Factor Analysis;
+DATA: FILE IS data.dat;
+VARIABLE: 
+NAMES ARE 
+UAVLTOT 
+UAVLTIR 
+UAVLTDELR 
+UAVLTREC 
+GPEGDOM 
+GPEGNDOM 
+COLOR1 
+COLOR2 
+SYDM;
+MODEL:
+MEM BY UAVLTOT* UAVLTIR UAVLTDELR UAVLTREC;
+MEM(var_MEM);
+SPEED BY COLOR1* COLOR2 SYDM;
+SPEED(var_SPEED);
+MOT BY GPEGDOM* GPEGNDOM;
+MOT(var_MOT);
+G BY 
+MEM*(G_MEM)
+SPEED(G_SPEED)
+MOT(G_MOT);
+G@1;
+[G@0];
+MODEL CONSTRAINT:
+var_MEM = 1 - G_MEM^2;
+var_SPEED = 1 - G_SPEED^2;
+var_MOT = 1 - G_MOT^2;
+ANALYSIS:
+ESTIMATOR = MLR;
+OUTPUT: STDYX RESIDUAL;
+SAVEDATA:
+RESULTS ARE second_order_factor_model_results.txt;
+save=fscores;
+file=second_order_factor_model_fscore.dat;
