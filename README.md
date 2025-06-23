@@ -1,4 +1,4 @@
-This is the repo for paper "Development of a novel harmonization approach for longitudinal cognitive data in people with HIV". 
+This is the repo for paper "Development of a refined harmonization approach for longitudinal cognitive data in people with HIV". 
 
 Mplus scripts used for Confirmatory Factor Analysis on reference line data can be found under the directory Reference_line_fitting. There are three model fitting scripts for each cohort: one factor model, first order factor model and second order factor model.
 
